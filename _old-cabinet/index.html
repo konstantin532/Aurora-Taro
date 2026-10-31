@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Aurora Tarot — кабинет таролога</title>
+<link rel="stylesheet" href="css/01-base-reset-vars.css">
+<link rel="stylesheet" href="css/02-base-typography-utils.css">
+<link rel="stylesheet" href="css/03-base-layout-forms.css">
+<link rel="stylesheet" href="css/04-base-responsive-breakpoints.css">
+<link rel="stylesheet" href="css/05-base-responsive-layout.css">
+<link rel="stylesheet" href="css/06-base-responsive-typography.css">
+<link rel="stylesheet" href="css/07-layout.css">
+<link rel="stylesheet" href="css/08-components.css">
+<link rel="stylesheet" href="css/09-print-deco.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Перейти к содержанию</a>
+
+<div id="app-wrapper">
+
+  <aside id="sidebar" aria-label="Разделы кабинета">
+    <div class="brand-block">
+      <svg viewBox="0 0 32 32" width="34" height="34" aria-hidden="true">
+        <path d="M16 2 19 13 30 16 19 19 16 30 13 19 2 16 13 13Z"
+              fill="none" stroke="var(--gold)" stroke-width="1.2"/>
+        <circle cx="16" cy="16" r="4.5" fill="var(--mystic-subtle)" stroke="var(--gold)" stroke-width="1"/>
+      </svg>
+      <div>
+        <span class="brand-block__name">Aurora Tarot</span>
+        <span class="brand-block__tagline">кабинет практики</span>
+      </div>
+    </div>
+    <nav aria-label="Навигация по разделам">
+      <ul class="nav-list" id="nav-list"></ul>
+    </nav>
+  </aside>
+
+  <div id="sidebar-overlay" hidden></div>
+
+  <div id="content-zone">
+    <header id="header">
+      <button class="hamburger" id="hamburger" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+          <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+        </svg>
+      </button>
+      <nav id="breadcrumbs" aria-label="Хлебные крошки">
+        <ol class="breadcrumb-list" id="breadcrumb-list"></ol>
+      </nav>
+      <div class="header-actions">
+        <span class="header-name" id="header-name" hidden></span>
+        <button class="btn btn--ghost btn--sm" id="presentation-toggle"
+                aria-pressed="false" title="Режим презентации: скрыть панели">
+          <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">
+            <rect x="3.5" y="5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M8.5 12h7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+          <span>Презентация</span>
+        </button>
+      </div>
+    </header>
+
+    <div id="content-row">
+      <main id="main-content" tabindex="-1"></main>
+      <aside id="context-panel" aria-label="Контекст панели"></aside>
+    </div>
+  </div>
+
+</div>
+
+<div class="toasts" id="toasts" role="status" aria-live="polite"></div>
+
+<script src="js/data-tarot.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/deck.js"></script>
+<script src="js/journal.js"></script>
+<script src="js/spreads.js"></script>
+<script src="js/router.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

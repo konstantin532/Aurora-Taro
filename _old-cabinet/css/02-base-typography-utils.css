@@ -1,0 +1,50 @@
+/* Типографика (антиква+система) и текстовые утилиты.
+   Все размеры — clamp, адаптив встроен, дублей в 06 нет. */
+
+.page-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: var(--tracking-display);
+  font-size: clamp(1.9rem, 1.2rem + 2.4vw, 3rem);
+  line-height: 1.12;
+  color: var(--gold); /* фолбэк, если background-clip:text недоступен */
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: var(--tracking-display);
+  font-size: clamp(1.15rem, 1rem + 0.7vw, 1.5rem);
+  line-height: 1.3;
+  color: var(--text-primary);
+}
+
+.lede {
+  font-size: clamp(1rem, 0.95rem + 0.3vw, 1.125rem);
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+
+.small-caps {
+  font-size: 0.82em;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+.text-muted  { color: var(--text-muted); }
+.text-serif  { font-family: var(--font-display); line-height: 1.7; }
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: calc(-1 * var(--space-1));
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}

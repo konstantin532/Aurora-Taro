@@ -1,0 +1,25 @@
+{% with p=is_book|yesno:",/" name=request.resolver_match.url_name %}
+<header class="running-head">
+  <a class="running-head__brand" href="{% if is_book %}#/{% else %}{% url 'home' %}{% endif %}">{{ site.brand }}</a>
+  <button class="sound-toggle" type="button" data-sound aria-pressed="false" title="Звук карт">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path class="sound-toggle__waves" d="M15.5 8.8a4.5 4.5 0 0 1 0 6.4M18 6.3a8 8 0 0 1 0 11.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path class="sound-toggle__off" d="M15.5 9.5l5 5m0-5l-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    <span class="sr-only">Звук карт</span>
+  </button>
+  <button class="menu-toggle" type="button" data-menu aria-expanded="false" aria-controls="site-nav">Оглавление</button>
+  <nav class="site-nav" id="site-nav" aria-label="Оглавление">
+    <ul>
+      <li><a href="{{ p }}#/about" data-nav="about">О тарологе</a></li>
+      <li><a href="{{ p }}#/prices" data-nav="prices">Консультации</a></li>
+      <li><a href="{{ p }}#/spread" data-nav="spread">Пробный расклад</a></li>
+      <li><a href="{{ p }}#/cards" data-nav="cards">Атлас карт</a></li>
+      <li><a href="{% url 'experience' %}"{% if name == 'experience' %} aria-current="page"{% endif %}>Опыт и отзывы</a></li>
+      {% if user.is_authenticated %}
+      <li><a href="{% url 'accounts:cabinet' %}"{% if name == 'cabinet' or name == 'collection' %} aria-current="page"{% endif %}>Кабинет</a></li>
+      {% else %}
+      <li><a href="{% url 'accounts:login' %}"{% if name == 'login' or name == 'register' %} aria-current="page"{% endif %}>Войти</a></li>
+      {% endif %}
+      <li><a class="site-nav__cta" href="{% url 'booking:book' %}"{% if name == 'book' %} aria-current="page"{% endif %}>Записаться</a></li>
+    </ul>
+  </nav>
+</header>
+{% endwith %}

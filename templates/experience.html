@@ -1,0 +1,39 @@
+{% extends "base.html" %}{% load static %}
+{% block title %}Опыт и отзывы · {{ site.brand }}{% endblock %}
+{% block description %}Истории из практики таролога и отзывы клиентов — с видео.{% endblock %}
+{% block page_class %}experience{% endblock %}
+{% block content %}
+<header class="page-head"><p class="chapter__num">Опыт</p><h1 tabindex="-1">Опыт и отзывы</h1>
+<p class="lede">Истории из практики и слова тех, кто уже приходил на консультацию.</p></header>
+
+<section class="exp-section" aria-labelledby="exp-stories">
+  <h2 class="atlas-group__title" id="exp-stories">Из практики</h2>
+  {% if stories %}
+  <div class="stories">
+    {% for s in stories %}
+    <article class="story">
+      {% if s.video %}<figure class="video-plate"><video controls preload="metadata" playsinline src="{% url 'media' s.video.name %}"{% if s.poster %} poster="{% url 'media' s.poster.name %}"{% endif %}></video></figure>{% endif %}
+      <div class="story__text"><p class="chapter__num">{% if s.happened_on %}{{ s.happened_on|date:"F Y" }}{% else %}История {{ forloop.counter }}{% endif %}</p>
+      <h3 class="story__title">{{ s.title }}</h3>{{ s.text|linebreaks }}</div>
+    </article>
+    {% endfor %}
+  </div>
+  {% else %}<p class="empty">Скоро здесь появятся истории из практики.</p>{% endif %}
+</section>
+
+<section class="exp-section" aria-labelledby="exp-reviews">
+  <h2 class="atlas-group__title" id="exp-reviews">Отзывы</h2>
+  {% if reviews %}
+  <ul class="testimonies">
+    {% for r in reviews %}
+    <li class="testimony">
+      {% if r.video %}<figure class="video-plate"><video controls preload="metadata" playsinline src="{% url 'media' r.video.name %}"></video></figure>{% endif %}
+      <blockquote>{{ r.text|linebreaks }}</blockquote>
+      <p class="testimony__sign">— {{ r.display_name }}, {{ r.created_at|date:"F Y"|lower }}</p>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}<p class="empty">Отзывов пока нет — ваш может стать первым.</p>{% endif %}
+  <aside class="spread-cta"><p>Были на консультации? Расскажите, как всё прошло.</p><a class="btn btn--rubric" href="{% url 'reviews:new' %}">Оставить отзыв</a></aside>
+</section>
+{% endblock %}

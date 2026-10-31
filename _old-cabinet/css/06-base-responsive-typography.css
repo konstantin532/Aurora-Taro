@@ -1,0 +1,15 @@
+/* Адаптивная типографика ЭЛЕМЕНТНОГО уровня.
+   Классы (.page-title и т.д.) целиком живут в 02 с clamp —
+   здесь дублей нет, только элементы и глобальные метрики. */
+
+html { font-size: 16px; }
+
+@media (max-width: 480px) {
+  html { font-size: 15px; }
+  body { line-height: 1.65; }
+}
+
+@media (min-width: 1280px) {
+  body { line-height: 1.6; }
+  p, li { max-width: 72ch; }
+}

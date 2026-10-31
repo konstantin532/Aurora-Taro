@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Подтверждение почты · {{ site.brand }}{% endblock %}
+{% block page_class %}form-page{% endblock %}
+{% block content %}
+{% if valid %}
+<header class="page-head"><p class="chapter__num">Последний шаг</p><h1 tabindex="-1">Подтвердите почту</h1>
+<p class="lede">{{ user_obj.email }} — это ваша почта? Нажмите кнопку, и кабинет откроется.</p></header>
+<form class="sheet" method="post">{% csrf_token %}<div class="form-actions"><button class="btn btn--rubric" type="submit">Подтвердить и войти</button></div></form>
+{% else %}
+<header class="page-head"><p class="chapter__num">Ссылка устарела</p><h1 tabindex="-1">Эта ссылка больше не работает</h1>
+<p class="lede">Возможно, почта уже подтверждена или ссылка устарела. <a href="{% url 'accounts:login' %}">Попробуйте войти</a> — если почта не подтверждена, мы пришлём новое письмо.</p></header>
+{% endif %}
+{% endblock %}

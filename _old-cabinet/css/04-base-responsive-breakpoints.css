@@ -1,0 +1,23 @@
+/* ТОЛЬКО переопределение токенов на брейкпоинтах.
+   Точки проекта: 480 / 768 / 1024 / 1280. */
+
+@media (max-width: 480px) {
+  :root {
+    --container-padding: var(--space-3);
+    --tarot-card-w-lg: 150px;
+    --tarot-card-w-md: 96px;
+    --tarot-card-w-sm: 68px;
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --container-padding: var(--space-4);
+    --tarot-card-w-lg: 170px;
+    --tarot-card-w-md: 110px;
+  }
+}
+
+@media (min-width: 1280px) {
+  :root { --context-panel-width: 340px; }
+}

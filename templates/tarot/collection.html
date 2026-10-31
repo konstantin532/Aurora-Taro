@@ -1,0 +1,30 @@
+{% extends "base.html" %}{% load static %}
+{% block title %}Коллекция карт · {{ site.brand }}{% endblock %}
+{% block page_class %}collection{% endblock %}
+{% block content %}
+<header class="page-head"><p class="chapter__num">Коллекция</p><h1 tabindex="-1">Ваш альбом карт</h1>
+<p class="lede">Карта дня и пробные расклады открывают карты. Каждый день в альбом идут карта дня и первые три расклада.</p>
+<div class="ribbon ribbon--big" role="img" aria-label="Открыто {{ collected }} карт из {{ total }}"><span class="ribbon__fill" style="--p: {{ percent }}%"></span></div>
+<p class="ribbon__label"><strong>{{ collected }}</strong> из {{ total }} карт{% if collected == total %} — колода собрана целиком!{% endif %}</p>
+<div class="form-actions"><a class="btn btn--rubric" href="{% url 'home' %}#/day">Карта дня</a><a class="btn" href="{% url 'home' %}#/spread">Пробный расклад</a></div>
+</header>
+{% for g in groups %}
+<section class="album-group" aria-labelledby="g-{{ g.key }}">
+  <h2 class="atlas-group__title" id="g-{{ g.key }}">{{ g.label }} <span class="atlas-group__count">{{ g.opened }} / {{ g.items|length }}</span></h2>
+  <ul class="album">
+    {% for i in g.items %}
+    <li class="album-card{% if i.opened %} is-open{% endif %}{% if g.key == 'major' %} is-major{% endif %}">
+      {% if i.opened %}
+      <a href="{% url 'home' %}#/card/{{ i.card.id }}" aria-label="{{ i.card.name }}, открыта {{ i.at|date:'j E' }}">
+        <span class="album-card__frame"><img src="{% static 'img/cards/' %}{{ i.card.id }}.jpg" alt="" width="480" height="831" loading="lazy"></span>
+        <span class="album-card__no">{{ i.mark }}</span><span class="album-card__name">{{ i.card.name }}</span></a>
+      {% else %}
+      <span class="album-card__frame" aria-hidden="true"><span class="card-back"></span><span class="album-card__q">?</span></span>
+      <span class="album-card__no">{{ i.mark }}</span><span class="album-card__name">Ещё не открыта</span>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endfor %}
+{% endblock %}
