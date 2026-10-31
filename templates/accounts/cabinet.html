@@ -1,0 +1,81 @@
+{% extends "base.html" %}{% load static %}
+{% block title %}Кабинет · {{ site.brand }}{% endblock %}
+{% block page_class %}cabinet{% endblock %}
+{% block content %}
+<header class="page-head"><p class="chapter__num">Кабинет</p><h1 tabindex="-1">Здравствуйте, {{ user.display_name }}</h1></header>
+
+<section class="cab-block cab-collection" aria-labelledby="cab-col">
+  <div>
+    <h2 class="sc-head" id="cab-col">Коллекция карт</h2>
+    <div class="ribbon" role="img" aria-label="Открыто {{ collected }} карт из {{ total }}"><span class="ribbon__fill" style="--p: {{ percent }}%"></span></div>
+    <p class="ribbon__label"><strong>{{ collected }}</strong> из {{ total }} · {{ percent }}%</p>
+    <p>Открывайте карту дня и делайте пробные расклады — карты лягут в альбом.</p>
+    <div class="form-actions"><a class="btn btn--rubric" href="{% url 'collection' %}">Открыть альбом</a><a class="link-quiet" href="{% url 'home' %}#/spread">Сделать расклад</a></div>
+  </div>
+</section>
+
+<section class="cab-block" aria-labelledby="cab-next">
+  <h2 class="sc-head" id="cab-next">Ближайшие записи</h2>
+  {% if upcoming %}
+  <ul class="ledger">
+    {% for b in upcoming %}
+    <li class="ledger__row">
+      <div><p class="ledger__when">{{ b.slot }}</p>
+      <p class="ledger__what">{{ b.service.title|default:"Консультация" }}{% if b.format %} · {{ b.format|lower }}{% endif %}{% if b.topic %} · {{ b.topic|lower }}{% endif %}</p></div>
+      <span class="stamp stamp--{{ b.status }}">{{ b.get_status_display }}</span>
+      {% if b.can_cancel %}<form method="post" action="{% url 'booking:cancel' b.pk %}">{% csrf_token %}<button class="link-button" type="submit">Отменить</button></form>{% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}<p class="empty">Записей пока нет.</p>{% endif %}
+  <a class="btn" href="{% url 'booking:book' %}">Записаться</a>
+</section>
+
+{% if past %}
+<section class="cab-block" aria-labelledby="cab-past">
+  <h2 class="sc-head" id="cab-past">Прошлые встречи</h2>
+  <ul class="ledger">
+    {% for b in past %}
+    <li class="ledger__row ledger__row--past">
+      <div><p class="ledger__when">{{ b.slot }}</p>
+      <p class="ledger__what">{{ b.service.title|default:"Консультация" }}</p>
+      {% if b.result_note %}<div class="note-from">{{ b.result_note|linebreaks }}</div>{% endif %}</div>
+      <span class="stamp stamp--{{ b.status }}">{{ b.get_status_display }}</span>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
+<section class="cab-block" aria-labelledby="cab-spreads">
+  <h2 class="sc-head" id="cab-spreads">Мои пробные расклады</h2>
+  {% if spreads %}
+  <ul class="spread-log">
+    {% for s in spreads %}
+    <li><p class="spread-log__date">{{ s.created_at|date:"j E, H:i" }}</p>
+      <ul class="spread-log__cards">{% for c in s.card_list %}<li><a href="{% url 'home' %}#/card/{{ c.card.id }}"><img src="{% static 'img/cards/' %}{{ c.card.id }}.jpg" alt="{{ c.card.name }}{% if c.reversed %}, перевёрнутая{% endif %}" width="480" height="831" loading="lazy"{% if c.reversed %} class="is-reversed"{% endif %}></a></li>{% endfor %}</ul>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}<p class="empty">Здесь сохранятся ваши расклады. <a href="{% url 'home' %}#/spread">Разложить три карты</a>.</p>{% endif %}
+</section>
+
+<section class="cab-block" aria-labelledby="cab-reviews">
+  <h2 class="sc-head" id="cab-reviews">Мои отзывы</h2>
+  {% if reviews %}
+  <ul class="ledger">
+    {% for r in reviews %}
+    <li class="ledger__row"><div><p class="ledger__when">{{ r.created_at|date:"j E Y" }}{% if r.video %} · с видео{% endif %}</p><p class="ledger__what">{{ r.text|truncatewords:18 }}</p></div>
+    <span class="stamp stamp--{{ r.status }}">{{ r.get_status_display }}</span></li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  <a class="btn" href="{% url 'reviews:new' %}">Оставить отзыв</a>
+</section>
+
+<section class="cab-block cab-account" aria-label="Настройки">
+  <a class="link-quiet" href="{% url 'accounts:password-reset' %}">Сменить пароль</a>
+  <form method="post" action="{% url 'accounts:logout' %}">{% csrf_token %}<button class="link-button" type="submit">Выйти</button></form>
+  <a class="link-quiet link-quiet--danger" href="{% url 'accounts:delete' %}">Удалить кабинет</a>
+</section>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Вход · {{ site.brand }}{% endblock %}
+{% block page_class %}form-page{% endblock %}
+{% block content %}
+<header class="page-head"><p class="chapter__num">Кабинет</p><h1 tabindex="-1">Вход</h1>
+<p class="lede">Войдите, чтобы записаться на консультацию и пополнять коллекцию карт.</p></header>
+<form class="sheet" method="post" novalidate>{% csrf_token %}
+<input type="hidden" name="next" value="{{ next }}">
+{% include "partials/form_errors.html" %}
+{% include "partials/field.html" with field=form.email %}
+{% include "partials/field.html" with field=form.password %}
+<div class="form-actions"><button class="btn btn--rubric" type="submit">Войти</button>
+<a class="link-quiet" href="{% url 'accounts:password-reset' %}">Забыли пароль?</a></div>
+<p class="sheet__aside">Ещё нет кабинета? <a href="{% url 'accounts:register' %}">Зарегистрироваться</a> — это минута.</p>
+</form>
+{% endblock %}

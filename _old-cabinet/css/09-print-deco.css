@@ -1,0 +1,65 @@
+/* ТОЛЬКО печать и forced-colors. Ничего не «чинит» в экранном режиме.
+   Хардкод цветов разрешён исключительно здесь. */
+
+@media print {
+  #sidebar, #header, #context-panel, #toasts, #sidebar-overlay,
+  .hamburger, .skip-link, .fan-deck, .progress, .skeleton {
+    display: none !important;
+  }
+
+  body, #app-wrapper {
+    background: #FFF !important;
+    background-attachment: auto !important;
+  }
+  body { color: #000; }
+
+  #main-content { padding: 0; max-width: none; }
+
+  .glass-card, .reading-text, .journal-entry, .card-day, .spread-slot {
+    background: #FFF !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: none !important;
+    border: 1px solid #999 !important;
+  }
+  .glass-card::before, .glass-card::after,
+  .card-day::before, .empty-state::before, .empty-state::after { display: none; }
+
+  .page-title {
+    background: none !important;
+    -webkit-text-fill-color: #000 !important;
+    color: #000 !important;
+  }
+  .lede, .text-muted, .spread-meta, .journal-entry__summary,
+  .empty-state, .form-hint { color: #444 !important; }
+
+  .tarot-card__face { background: #FFF !important; border-color: #000 !important; color: #000 !important; }
+  .tarot-card__face-name, .tarot-card__face-meta { color: #000 !important; opacity: 1 !important; }
+  .tarot-card__back { background: #FFF !important; border-color: #000 !important; }
+  .tarot-card__back::after { display: none; }
+
+  .glass-card, .journal-entry, .reading-pos, .tarot-card, .card-day { break-inside: avoid; }
+  .journal-entry { page-break-inside: avoid; }
+
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    color: #444;
+  }
+  .btn { border: 1px solid #000 !important; background: none !important; box-shadow: none !important; color: #000 !important; }
+  .tag { border-color: #000 !important; background: none !important; color: #000 !important; }
+}
+
+@media (forced-colors: active) {
+  .glass-card, .reading-text, .journal-entry, .input, .select { border: 1px solid CanvasText; }
+  .btn:focus-visible, .tarot-card--clickable:focus-visible, .toggle:focus-visible { outline: 2px solid Highlight; }
+  .btn--primary { background: Canvas; color: CanvasText; box-shadow: none; }
+  .nav-item[aria-current="page"] { border-left: 2px solid Highlight; color: Highlight; }
+  .toggle[aria-checked="true"] { background: Highlight; border-color: Highlight; }
+  .toggle[aria-checked="true"]::after { background: CanvasText; }
+  .progress__fill { background: Highlight; }
+  .spread-slot { border: 1px dashed CanvasText; }
+  .tarot-card__face, .tarot-card__back { border: 2px solid CanvasText; }
+  .page-title { background: none; -webkit-text-fill-color: CanvasText; color: CanvasText; }
+  .tag, .badge { border: 1px solid CanvasText; }
+}

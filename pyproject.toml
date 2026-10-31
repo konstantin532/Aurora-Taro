@@ -1,0 +1,12 @@
+[project]
+name = "aurora-taro"
+version = "0.1.0"
+description = "Сайт таролога «Аврора · Таро»: книга, кабинет, запись, отзывы, коллекция карт"
+requires-python = ">=3.14"
+dependencies = [
+    "django>=6.0,<6.1",
+    "python-dotenv>=1.2.4",
+]
+
+[tool.uv]
+package = false

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Регистрация · {{ site.brand }}{% endblock %}
+{% block page_class %}form-page{% endblock %}
+{% block content %}
+<header class="page-head"><p class="chapter__num">Кабинет</p><h1 tabindex="-1">Регистрация</h1>
+<p class="lede">В кабинете — ваши записи и заметки после встречи, пробные расклады и личная коллекция из 78 карт.</p></header>
+<form class="sheet" method="post" novalidate>{% csrf_token %}
+{% include "partials/form_errors.html" %}
+{% include "partials/field.html" with field=form.first_name %}
+{% include "partials/field.html" with field=form.email %}
+{% include "partials/field.html" with field=form.password1 %}
+{% include "partials/field.html" with field=form.password2 %}
+{% include "partials/field.html" with field=form.adult %}
+{% url 'privacy' as privacy_url %}
+<div class="field{% if form.consent.errors %} has-error{% endif %}"><label class="check">{{ form.consent }}<span>{{ form.consent.label }} по <a href="{{ privacy_url }}" target="_blank" rel="noopener">политике конфиденциальности</a></span></label>
+{% for e in form.consent.errors %}<p class="field__error">{{ e }}</p>{% endfor %}</div>
+<div class="form-actions"><button class="btn btn--rubric" type="submit">Создать кабинет</button></div>
+<p class="sheet__aside">Уже есть кабинет? <a href="{% url 'accounts:login' %}">Войти</a></p>
+</form>
+{% endblock %}

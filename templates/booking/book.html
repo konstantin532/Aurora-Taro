@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Запись на консультацию · {{ site.brand }}{% endblock %}
+{% block page_class %}form-page booking-page{% endblock %}
+{% block content %}
+<header class="page-head"><p class="chapter__num">Запись</p><h1 tabindex="-1">Выберите время</h1>
+<p class="lede">Время указано по Москве. После записи я подтвержу встречу — статус появится в кабинете.</p></header>
+{% if days %}
+<form class="sheet" method="post" novalidate>{% csrf_token %}
+{% include "partials/form_errors.html" %}
+<fieldset class="field slot-days{% if form.slot.errors %} has-error{% endif %}"><legend>Свободные окна</legend>
+{% for day, slots in days %}
+  <div class="slot-day"><p class="slot-day__date">{{ day|date:"j E, l" }}</p>
+  <div class="choices">{% for s in slots %}<label class="choice choice--slot"><input type="radio" name="slot" value="{{ s.pk }}"{% if form.slot.value|stringformat:"s" == s.pk|stringformat:"s" %} checked{% endif %} required><span>{{ s.start|time:"H:i" }}<small>{{ s.duration_minutes }} мин{% if s.note %} · {{ s.note }}{% endif %}</small></span></label>{% endfor %}</div></div>
+{% endfor %}
+{% for e in form.slot.errors %}<p class="field__error">{{ e }}</p>{% endfor %}
+</fieldset>
+{% include "partials/field.html" with field=form.service %}
+{% if form.format.field.choices %}{% include "partials/field.html" with field=form.format %}{% endif %}
+{% include "partials/field.html" with field=form.topic %}
+{% include "partials/field.html" with field=form.question %}
+<div class="form-actions"><button class="btn btn--rubric" type="submit">Записаться</button></div>
+<p class="sheet__aside">Вопрос видит только таролог. Отменить запись можно в кабинете.</p>
+</form>
+{% else %}
+<div class="sheet">{% include "partials/form_errors.html" %}{% for e in form.slot.errors %}<p class="form-alert" role="alert">{{ e }}</p>{% endfor %}
+<p class="empty">Свободных окон сейчас нет — я скоро добавлю новые.</p>
+{% if site.telegram or site.whatsapp or site.email %}<p>Или напишите напрямую:
+{% if site.telegram %}<a href="https://t.me/{{ site.telegram }}" rel="noopener" target="_blank">Telegram</a>{% endif %}
+{% if site.whatsapp %} · <a href="https://wa.me/{{ site.whatsapp }}" rel="noopener" target="_blank">WhatsApp</a>{% endif %}
+{% if site.email %} · <a href="mailto:{{ site.email }}">{{ site.email }}</a>{% endif %}</p>{% endif %}
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Подтверждение почты · {{ site.brand }}{% endblock %}
+{% block page_class %}form-page{% endblock %}
+{% block content %}
+<header class="page-head"><p class="chapter__num">Почти готово</p>
+{% if delivery == "local" %}
+<h1 tabindex="-1">Письмо пока не отправлено</h1>
+<p class="lede">Отправка почты пока не настроена. Кабинет создан, но адрес ещё не подтверждён.</p>
+{% elif delivery == "failed" %}
+<h1 tabindex="-1">Письмо не отправилось</h1>
+<p class="lede">Не удалось отправить письмо{% if email %} на <strong>{{ email }}</strong>{% endif %}. Кабинет создан, но почта ещё не подтверждена.</p>
+{% else %}
+<h1 tabindex="-1">Проверьте почту</h1>
+<p class="lede">Мы отправили письмо{% if email %} на <strong>{{ email }}</strong>{% endif %}. Откройте ссылку из письма, чтобы подтвердить почту и войти в кабинет.</p>
+{% endif %}
+</header>
+<div class="sheet">{% if delivery == "local" %}
+<p>Обратитесь к администратору сайта. После подключения почты <a href="{% url 'accounts:login' %}">войдите</a> с тем же адресом и паролем: мы отправим подтверждение.</p>
+{% elif delivery == "failed" %}
+<p><a href="{% url 'accounts:login' %}">Попробуйте войти</a> с той же почтой и паролем: мы повторим отправку. Регистрироваться заново не нужно.</p>
+{% else %}
+<p>Письма нет? Загляните в папку «Спам». Если и там пусто — <a href="{% url 'accounts:login' %}">попробуйте войти</a>: мы пришлём письмо ещё раз.</p>
+{% endif %}</div>
+{% endblock %}

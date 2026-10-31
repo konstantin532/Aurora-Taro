@@ -1,0 +1,12 @@
+{% extends "base.html" %}{% load static %}
+{% block title %}{{ site.brand }} — консультации таро{% endblock %}
+{% block description %}Консультации таро по классической колоде Райдер–Уэйт: расклады на отношения, работу и выбор пути. Карта дня, пробный расклад, коллекция и значения всех 78 карт.{% endblock %}
+{% block main %}<main id="main" tabindex="-1"></main>
+<noscript><p class="noscript">Для карты дня, расклада и атласа включите JavaScript в браузере.</p></noscript>{% endblock %}
+{% block footer %}<footer class="colophon" id="colophon"></footer>{% endblock %}
+{% block scripts %}
+{{ site_data|json_script:"site-data" }}
+{{ server_data|json_script:"server-data" }}
+<script src="{% static 'js/data-tarot.js' %}"></script>
+<script src="{% static 'js/app.js' %}"></script>
+{% endblock %}

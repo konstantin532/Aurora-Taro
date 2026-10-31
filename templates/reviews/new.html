@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Оставить отзыв · {{ site.brand }}{% endblock %}
+{% block page_class %}form-page{% endblock %}
+{% block content %}
+<header class="page-head"><p class="chapter__num">Отзыв</p><h1 tabindex="-1">Расскажите о консультации</h1>
+<p class="lede">Отзыв появится в разделе «Опыт и отзывы» после проверки. Можно приложить короткое видео.</p></header>
+<form class="sheet" method="post" enctype="multipart/form-data" novalidate data-upload>{% csrf_token %}
+{% include "partials/form_errors.html" %}
+{% include "partials/field.html" with field=form.display_name %}
+{% include "partials/field.html" with field=form.text %}
+{% include "partials/field.html" with field=form.video %}
+<p class="field__help">MP4, MOV или WebM, до 200 МБ. С телефона подойдёт обычное видео из галереи.</p>
+{% include "partials/field.html" with field=form.consent_publish %}
+<div class="form-actions"><button class="btn btn--rubric" type="submit">Отправить отзыв</button></div>
+<p class="upload-progress" data-progress hidden>Видео загружается… Не закрывайте страницу.</p>
+</form>
+{% endblock %}

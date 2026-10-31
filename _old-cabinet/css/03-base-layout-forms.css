@@ -1,0 +1,59 @@
+/* Лейауты + формы. ГЛАВНОЕ: все 8 страничных контейнеров описаны
+   ровно здесь, одним правилом — flex/column/gap:20px. Никаких
+   div-обёрток над карточками без собственного класса. */
+
+.dashboard,
+.spread-board,
+.reading-result,
+.journal,
+.deck-view,
+.glossary,
+.card-detail,
+.settings-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--page-gap);
+}
+
+.page-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3) var(--space-5);
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.container { max-width: var(--container-max); width: 100%; margin-inline: auto; }
+.container--narrow { max-width: 640px; }
+
+/* ---------- формы ---------- */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.field-label {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+}
+.input,
+.select {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface-glass);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+.input::placeholder { color: var(--text-muted); opacity: 0.7; }
+.input:hover, .select:hover { border-color: var(--border-glass-strong); }
+.input:focus, .select:focus { border-color: var(--gold-line-strong); }
+.select option { background: var(--space-mid); color: var(--text-primary); }
+
+.form-row    { display: flex; flex-wrap: wrap; gap: var(--space-4); }
+.form-actions{ display: flex; flex-wrap: wrap; gap: var(--space-3); }
+.form-hint   { font-size: 0.85rem; color: var(--text-muted); }
+.filter-bar  { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: flex-end; }
+.filter-bar__search { max-width: 260px; }

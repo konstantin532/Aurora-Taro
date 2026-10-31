@@ -1,0 +1,8 @@
+{% load aurora %}<div class="field{% if field.errors %} has-error{% endif %}">
+{% if field.widget_type == "checkbox" %}<label class="check">{{ field }}<span>{{ field.label }}{% if after %} {{ after }}{% endif %}</span></label>
+{% elif field.widget_type == "radioselect" %}<fieldset class="field"><legend>{{ field.label }}</legend><div class="choices">{% for r in field %}<label class="choice">{{ r.tag }}<span>{{ r.choice_label }}</span></label>{% endfor %}</div></fieldset>
+{% elif field.widget_type == "clearablefile" or field.widget_type == "file" %}<label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}
+{% else %}<label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field|as_input }}{% endif %}
+{% if field.help_text %}<div class="field__help">{{ field.help_text|safe }}</div>{% endif %}
+{% for e in field.errors %}<p class="field__error">{{ e }}</p>{% endfor %}
+</div>
